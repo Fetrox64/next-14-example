@@ -175,7 +175,7 @@ export async function fetchInvoiceById(id: string) {
 
     return invoice[0];
   } catch (error) {
-    throw new Error("Failed to fetch invoice.");
+    return null;
   }
 }
 
