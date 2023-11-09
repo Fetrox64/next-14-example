@@ -9,16 +9,21 @@ import {
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { Button } from "@/src/app/ui/button";
+import { updateInvoice } from "@/src/app/lib/actions";
 
 export default function EditInvoiceForm({
   invoice,
   customers,
 }: {
-  invoice: InvoiceForm;
+  invoice: InvoiceForm | undefined;
   customers: CustomerField[];
 }) {
+  if (!invoice) return null;
+
+  const updateInvoiceWithId = updateInvoice.bind(null, invoice.id);
+
   return (
-    <form>
+    <form action={updateInvoiceWithId}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
@@ -30,7 +35,7 @@ export default function EditInvoiceForm({
               id="customer"
               name="customerId"
               className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              defaultValue={invoice.customer_id}
+              defaultValue={invoice!.customer_id}
             >
               <option value="" disabled>
                 Select a customer
